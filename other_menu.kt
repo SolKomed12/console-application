@@ -1,12 +1,7 @@
-
-// variables
-var Games_Menu_input: Int? = 1
-var repeaterGame_input: String? = ""
-var usersSettings_input: Int? = 1
-
 // choice games
 object Games_Menu {
     fun choiceGames_Menu() {
+        var Games_Menu_input: Int? = 1
         while (Games_Menu_input != 0) {
             println("Меню игр (0 - выход)")
             println("1 - Повторение")
@@ -16,6 +11,7 @@ object Games_Menu {
             when (Games_Menu_input) {
                 1 -> repeaterGame_Menu()
                 2 -> println("Скоро...")
+                0 -> println("выход")
                 else -> println("Неверный выбор $Games_Menu_input")
             }
         }
@@ -23,6 +19,7 @@ object Games_Menu {
     //      \||/
     // games \/
     fun repeaterGame_Menu() {
+        var repeaterGame_input: String? = ""
         println("Повторялка (0 - выход)")
         while (repeaterGame_input != "0") {
             repeaterGame_input = input.str()
@@ -34,6 +31,7 @@ object Games_Menu {
 // users settings
 fun usersSettings_Menu() {
     while (usersSettings_input != 0) {
+        var usersSettings_input: Int? = 1
         // menu
         println("Меню пользователя (0 - выход)")
         println("1 - Установка")
@@ -45,6 +43,7 @@ fun usersSettings_Menu() {
             1 -> UserManager.reg("Введите имя")
             2 -> UserManager.rename("Введите новое имя")
             3 -> if (UserManager.if_admin() == true) { UserManager.status_admin(false) }
+            0 -> println("выход")
             else -> println("Неверный выбор $usersSettings_input")
         }
     }

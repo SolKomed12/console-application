@@ -30,8 +30,8 @@ object Games_Menu {
 
 // users settings
 fun usersSettings_Menu() {
+    var usersSettings_input: Int? = 1
     while (usersSettings_input != 0) {
-        var usersSettings_input: Int? = 1
         // menu
         println("Меню пользователя (0 - выход)")
         println("1 - Установка")

@@ -1,11 +1,12 @@
 
 // -------------------------------
-// version 2.5 developer SolKomed
+// version 2.5.6 developer SolKomed
 // -------------------------------
 
 // optional, for work user
 var user_name: String? = null
 var admin_protection: Boolean = false
+var prefix: String = ""
 
 // for string in null
 fun String.toOrNull() = ifBlank { null }
@@ -14,14 +15,8 @@ object input {
     // optional, for work int, string
     fun invitation() {
         if (user_name != null) {
-            if (admin_protection == true){
-                print("[Admin] <$user_name> ")
-            } else {
-                print("<$user_name> ")
-            }
-        } else {
-            print(">>> ")
-        }
+            print("$prefix<$user_name> ")
+        } else { print(">>> ") }
     }
     // for string necessarily: ?
     fun str(text: String = "notext"): String? {
@@ -37,6 +32,9 @@ object input {
     }
 }
 
+// wrongchoice for all func wrong choice
+fun wrongChoice() { println("Неверный выбор.") }
+
 // manager user for properites in main.kt, other_menu.kt
 object UserManager {
     // if admin
@@ -49,18 +47,26 @@ object UserManager {
             println("Имя изменено.")
         } else { println("Ненайден пользователь.") }
     }
-    // register users
+    fun ifPrefix() {
+        when (if_admin()) {
+            true -> prefix = "[Admin]"
+            else -> prefix = ""
+        }
+    }
+    // register user
     fun reg(text: String, status: String="user") {
         var name: String? = input.str(text)
-        if (status == "user") {
-            User(name)
-        } else if (status == "admin") { Admin(name) }
+        when (status) {
+            "user" -> User(name)
+            else -> Admin(name)
+        }
     }
-    // change status admin
+    // change status user
     fun status_admin(status: Boolean) {
         if (user_name != null) {
             admin_protection = status
-            println(if (status) "Права выданы" else "Права сняты")
+            println(if (status) "Права повышены" else "Права сняты")
+            ifPrefix()
         } else { println("Ненайден пользователь.") }
     }
 }
@@ -76,5 +82,6 @@ class Admin(name: String?): User(name) {
     init {
         println ("Добавление прав администратора.")
         admin_protection = true
+        UserManager.ifPrefix()
     }
 }

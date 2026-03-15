@@ -7,12 +7,12 @@ object Games_Menu {
             println("1 - Повторение")
             println("2 - Скоро...")
             Games_Menu_input = input.int()
-            
+
             when (Games_Menu_input) {
                 1 -> repeaterGame_Menu()
                 2 -> println("Скоро...")
-                0 -> println("выход")
-                else -> println("Неверный выбор $Games_Menu_input")
+                0 -> println("")
+                else -> wrongChoice()
             }
         }
     }
@@ -43,8 +43,8 @@ fun usersSettings_Menu() {
             1 -> UserManager.reg("Введите имя")
             2 -> UserManager.rename("Введите новое имя")
             3 -> if (UserManager.if_admin() == true) { UserManager.status_admin(false) }
-            0 -> println("выход")
-            else -> println("Неверный выбор $usersSettings_input")
+            0 -> println("")
+            else -> wrongChoice()
         }
     }
 }
@@ -61,5 +61,5 @@ fun promoGift_Menu() {
 fun adminPanel_Menu(ask: Int?) {
     if (UserManager.if_admin() == true) {
         println("Админ панель не сделана.") 
-    } else { println("Неверный выбор $ask") }
+    } else { wrongChoice() }
 }

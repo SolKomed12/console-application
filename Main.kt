@@ -21,7 +21,7 @@ fun main() {
         println("2 - Управление пользователем")
         println("3 - Ввод промокодов")
         if (UserManager.if_admin() == true) { println("4 - Админ панель") }
-        ask = input.int("notext")
+        ask = input.int()
         logic(ask)
     }
 }

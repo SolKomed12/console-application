@@ -1,44 +1,59 @@
 
 // -------------------------------
-// version 2.5.6 developer SolKomed
+// version 2.6.4 developer SolKomed
 // -------------------------------
 
 // optional, for work user
-var user_name: String? = null
-var admin_protection: Boolean = false
-var prefix: String = ""
+private var user_name: String? = null
+private var admin_protection: Boolean = false
+private var prefix: String = " "
 
 // for string in null
 fun String.toOrNull() = ifBlank { null }
 // readln
 object input {
     // optional, for work int, string
-    fun invitation() {
+    private fun invitation(text: String) {
+        if (text != "notext") { println(text) }
         if (user_name != null) {
             print("$prefix<$user_name> ")
         } else { print(">>> ") }
     }
     // for string necessarily: ?
     fun str(text: String = "notext"): String? {
-        if (text != "notext") { println(text) }
-        invitation()
+        invitation(text)
         return readln().toOrNull()
     }
     // for int necessarily: ?
     fun int(text: String = "notext"): Int? {
-        if (text != "notext") { println(text) }
-        invitation()
+        invitation(text)
         return readln().toIntOrNull()
     }
 }
 
-// wrongchoice for all func wrong choice
-fun wrongChoice() { println("Неверный выбор.") }
+// presets for speed sentenc
+object presets {
+    // wrongchoice for all func wrong choice
+    fun wrongChoice() { println("Неверный выбор.") }
+}
+
+object returnProperties {
+    fun username(): String? { return if (user_name != null) user_name else { "нет" } }
+}
 
 // manager user for properites in main.kt, other_menu.kt
 object UserManager {
+    private fun nonUserToAdmim() {
+        println("Ненайден пользователь.")
+        var choice: String? = input.str("Создать пользователя? (yes, no)")
+        when (choice) {
+            "yes" -> regUser("Введите имя", "admin")
+            "no" -> println("Отменено.")
+            else -> presets.wrongChoice()
+        }
+    }
     // if admin
-    fun if_admin(): Boolean { return admin_protection }
+    fun ifAdmin(): Boolean { return admin_protection }
     // rename user
     fun rename(text: String) {
         var new_name: String? = input.str(text)
@@ -47,40 +62,41 @@ object UserManager {
             println("Имя изменено.")
         } else { println("Ненайден пользователь.") }
     }
+    // optional, for work prefix
     fun ifPrefix() {
-        when (if_admin()) {
-            true -> prefix = "[Admin]"
-            else -> prefix = ""
+        when (ifAdmin()) {
+            true -> prefix = "[Admin] "
+            else -> prefix = " "
         }
     }
     // register user
-    fun reg(text: String, status: String="user") {
+    fun regUser(text: String, status: String="user") {
         var name: String? = input.str(text)
         when (status) {
             "user" -> User(name)
-            else -> Admin(name)
+            "admin" -> Admin(name)
+            else -> println("Внутренняя ошибка.")
         }
     }
     // change status user
-    fun status_admin(status: Boolean) {
+    fun statusAdmin(status: Boolean) {
         if (user_name != null) {
             admin_protection = status
             println(if (status) "Права повышены" else "Права сняты")
             ifPrefix()
-        } else { println("Ненайден пользователь.") }
+        } else { nonUserToAdmim() }
     }
 }
 // basic class
 open class User(name: String?) {
     init {
-        println("Пользователь $name создан!")
+        println("Пользователь $name создан.")
         user_name = name
     }
 }
 // for class User
 class Admin(name: String?): User(name) {
     init {
-        println ("Добавление прав администратора.")
         admin_protection = true
         UserManager.ifPrefix()
     }

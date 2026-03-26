@@ -12,7 +12,7 @@ fun logic(ask: Int?) {
 }
 
 //        ||
-// start \||/
+// start \  /
 //        \/
 fun main() {
     var ask: Int? = 1

@@ -8,6 +8,7 @@ object gamesMenu {
             println("1 - Повторение")
             println("2 - Скоро...")
             Games_Menu_input = input.int()
+            // if game
 
             when (Games_Menu_input) {
                 1 -> repeaterGame_Menu()
@@ -43,7 +44,7 @@ fun usersSettings_Menu() {
         when (usersSettings_input) {
             1 -> UserManager.regUser("Введите имя")
             2 -> UserManager.rename("Введите новое имя")
-            3 -> if (UserManager.ifAdmin() == true) { UserManager.statusAdmin(false) } else { presets.wrongChoice() }
+            3 -> if (UserManager.ifAdmin()) { UserManager.statusAdmin(false) } else { presets.wrongChoice() }
             0 -> println("")
             else -> presets.wrongChoice()
         }
@@ -64,5 +65,6 @@ fun adminPanel_Menu() {
 }
 fun proporties_Menu() {
     println("Консольное приложение")
-    println("Пользователь: ${returnProperties.username()}")
+    println("Пользователь: ${Properties.username()}")
+    println("Админ доступ: ${Properties.admin()}")
 }

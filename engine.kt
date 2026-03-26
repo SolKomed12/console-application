@@ -1,6 +1,6 @@
 
 // -------------------------------
-// version 2.6.4 developer SolKomed
+// version 2.6.7 developer SolKomed
 // -------------------------------
 
 // optional, for work user
@@ -36,13 +36,15 @@ object presets {
     // wrongchoice for all func wrong choice
     fun wrongChoice() { println("Неверный выбор.") }
 }
-
-object returnProperties {
+// Properties for main.kt and other_menu.kt for user
+object Properties {
     fun username(): String? { return if (user_name != null) user_name else { "нет" } }
+    fun admin(): String { return if (admin_protection) "да" else "нет"}
 }
 
 // manager user for properites in main.kt, other_menu.kt
 object UserManager {
+    // optional for create user admin in not user
     private fun nonUserToAdmim() {
         println("Ненайден пользователь.")
         var choice: String? = input.str("Создать пользователя? (yes, no)")
@@ -52,7 +54,7 @@ object UserManager {
             else -> presets.wrongChoice()
         }
     }
-    // if admin
+    // if admin for main.kt and other_menu.kt work
     fun ifAdmin(): Boolean { return admin_protection }
     // rename user
     fun rename(text: String) {
